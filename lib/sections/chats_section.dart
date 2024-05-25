@@ -2,6 +2,7 @@ import 'package:chitchat/widgets/custom_card.dart';
 import 'package:flutter/material.dart';
 
 import '../model/chat_model.dart';
+import '../screens/select_contact_screen.dart';
 
 class ChatsSection extends StatefulWidget {
   const ChatsSection({super.key});
@@ -45,7 +46,14 @@ class _ChatsSectionState extends State<ChatsSection> {
   Widget build(BuildContext context) {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (builder) => const SelectContactScreen(),
+              ),
+            );
+          },
           backgroundColor: const Color(0xFF25D366),
           child: const Icon(Icons.chat),
         ),
