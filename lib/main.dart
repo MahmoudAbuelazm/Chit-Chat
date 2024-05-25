@@ -17,7 +17,7 @@ class MainApp extends StatelessWidget {
           fontFamily: GoogleFonts.openSans().fontFamily,
           useMaterial3: false,
           primaryColor: const Color(0xFF075E54),
-          hintColor:  Color(0xFF128C7E),
+          hintColor: const Color(0xFF128C7E),
         ),
         debugShowCheckedModeBanner: false,
         home: const HomeScreen());
