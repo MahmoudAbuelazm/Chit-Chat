@@ -60,7 +60,7 @@ class _ChatsSectionState extends State<ChatsSection> {
         body: ListView.builder(
           itemCount: chats.length,
           itemBuilder: (context, index) {
-            return CustomCard(chatModel: chats[index]);
+            return CustomCard(chatModel: chats[index],);
           },
         ));
   }
