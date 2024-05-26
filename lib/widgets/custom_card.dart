@@ -17,6 +17,7 @@ class CustomCard extends StatelessWidget {
         }));
       },
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
             leading: CircleAvatar(

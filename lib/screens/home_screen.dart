@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../sections/camera_section.dart';
 import '../sections/chats_section.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -30,27 +31,26 @@ class _HomeScreenState extends State<HomeScreen>
               onPressed: () {},
             ),
             PopupMenuButton(
-              itemBuilder: (BuildContext context) {
-                return [
-                  const PopupMenuItem(
-                    child: Text('New group'),
-                  ),
-                  const PopupMenuItem(
-                    child: Text('New broadcast'),
-                  ),
-                  const PopupMenuItem(
-                    child: Text('WhatsApp Web'),
-                  ),
-                  const PopupMenuItem(
-                    child: Text('Starred messages'),
-                  ),
-                  const PopupMenuItem(
-                    child: Text('Settings'),
-                  )
-                ];
-              },
-              onSelected: (value) =>{}
-            )
+                itemBuilder: (BuildContext context) {
+                  return [
+                    const PopupMenuItem(
+                      child: Text('New group'),
+                    ),
+                    const PopupMenuItem(
+                      child: Text('New broadcast'),
+                    ),
+                    const PopupMenuItem(
+                      child: Text('WhatsApp Web'),
+                    ),
+                    const PopupMenuItem(
+                      child: Text('Starred messages'),
+                    ),
+                    const PopupMenuItem(
+                      child: Text('Settings'),
+                    )
+                  ];
+                },
+                onSelected: (value) => {})
           ],
           bottom: TabBar(
             controller: _tabController,
@@ -74,9 +74,7 @@ class _HomeScreenState extends State<HomeScreen>
         body: TabBarView(
           controller: _tabController,
           children: const [
-            Center(
-              child: Text('Camera'),
-            ),
+            CameraSection(),
             ChatsSection(),
             Center(
               child: Text('Status'),

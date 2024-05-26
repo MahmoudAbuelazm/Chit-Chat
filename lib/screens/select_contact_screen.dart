@@ -1,3 +1,4 @@
+import 'package:chitchat/screens/new_group_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../model/chat_model.dart';
@@ -114,9 +115,19 @@ class _SelectContactScreenState extends State<SelectContactScreen> {
           itemCount: chat.length + 2,
           itemBuilder: (context, index) {
             if (index == 0) {
-              return const ButtonCard(
-                name: 'New group',
-                icon: Icons.group,
+              return InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (builder) => const NewGroup(),
+                    ),
+                  );
+                },
+                child: const ButtonCard(
+                  name: 'New group',
+                  icon: Icons.group,
+                ),
               );
             } else if (index == 1) {
               return const ButtonCard(

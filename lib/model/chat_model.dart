@@ -8,6 +8,7 @@ class ChatModel {
   String? time;
   String? currentMessage;
   String? status;
+  bool select = false;
   ChatModel({
     required this.name,
     required this.icon,
@@ -15,5 +16,6 @@ class ChatModel {
      this.time,
      this.currentMessage,
     this.status,
+    this.select = false,
   });
 }
