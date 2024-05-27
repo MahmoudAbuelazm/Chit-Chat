@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/foundation.dart' as foundation;
 
+import '../widgets/own_message.dart';
+
 class IndividualChatScreen extends StatefulWidget {
   const IndividualChatScreen({super.key, required this.chatModel});
   final ChatModel chatModel;
@@ -104,7 +106,6 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
                   const PopupMenuItem(
                     value: 'Mute notifications',
                     child: Text('Mute notifications'),
-
                   ),
                   const PopupMenuItem(
                     value: 'Wallpaper',
@@ -133,7 +134,13 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
           },
           child: Stack(
             children: [
-              ListView(),
+              SizedBox(
+                height: MediaQuery.of(context).size.height - 140,
+                child: ListView(
+                  shrinkWrap: true,
+                  children: const [OwnMessage()],
+                ),
+              ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Column(
