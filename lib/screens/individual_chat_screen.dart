@@ -1,9 +1,12 @@
 import 'package:chitchat/model/chat_model.dart';
+import 'package:chitchat/widgets/reply_card.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/foundation.dart' as foundation;
+import 'package:socket_io_client/socket_io_client.dart' as io;
 
+import '../model/message_model.dart';
 import '../widgets/own_message.dart';
 
 class IndividualChatScreen extends StatefulWidget {
@@ -18,8 +21,11 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
   final TextEditingController textEditingController = TextEditingController();
   bool showEmojiPicker = false;
   FocusNode focusNode = FocusNode();
+  io.Socket? socket;
+  List<MessageModel> messages = [];
   @override
   void initState() {
+    connect();
     focusNode.addListener(() {
       if (focusNode.hasFocus) {
         setState(() {
@@ -28,6 +34,45 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
       }
     });
     super.initState();
+  }
+
+  void connect() {
+    socket = io.io(
+      "",
+      <String, dynamic>{
+        'transports': ['websocket'],
+        'autoConnect': false,
+      },
+    );
+    socket!.connect();
+
+    socket!.emit('message', 'Hello');
+    socket!.onConnect((data) {
+      print('Connected');
+      socket!.on(
+        'message',
+        (msg) {
+          print(msg);
+          setMessage("destination", msg["message"]);
+        },
+      );
+    });
+  }
+
+  void sendMessage(String message, int sourceId, int targetId) {
+    setMessage("source", message);
+    socket!.emit('message', {
+      "message": message,
+      "sourceId": sourceId,
+      "targetId": targetId,
+    });
+    textEditingController.clear();
+  }
+
+  void setMessage(String type, String message) {
+    setState(() {
+      messages.add(MessageModel(type: type, message: message));
+    });
   }
 
   @override
@@ -136,9 +181,21 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
             children: [
               SizedBox(
                 height: MediaQuery.of(context).size.height - 140,
-                child: ListView(
+                child: ListView.builder(
                   shrinkWrap: true,
-                  children: const [OwnMessage()],
+                  itemCount: messages.length,
+                  itemBuilder: (context, index) {
+                    if (messages[index].type == "source") {
+                      return OwnMessage(
+                           message: messages[index].message,
+                          );
+                    } else {
+                      return ReplyCard(
+                          message: messages[index].message,
+                          
+                      );
+                    }
+                  },
                 ),
               ),
               Align(

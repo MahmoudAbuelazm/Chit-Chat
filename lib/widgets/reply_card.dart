@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ReplyCard extends StatelessWidget {
-  const ReplyCard({super.key});
+  const ReplyCard({super.key, required this.message});
+  final String message;
 
   @override
   Widget build(BuildContext context) {
@@ -10,16 +11,16 @@ class ReplyCard extends StatelessWidget {
       child: ConstrainedBox(
         constraints:
             BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.65),
-        child: const Card(
+        child:  Card(
           elevation: 1,
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(10),
               bottomLeft: Radius.circular(10),
               bottomRight: Radius.circular(10),
             ),
           ),
-          margin: EdgeInsets.symmetric(
+          margin: const EdgeInsets.symmetric(
             vertical: 5,
             horizontal: 15,
           ),
@@ -27,16 +28,16 @@ class ReplyCard extends StatelessWidget {
             children: [
               Padding(
                 padding:
-                    EdgeInsets.only(left: 10, right: 40, top: 5, bottom: 20),
+                    const EdgeInsets.only(left: 10, right: 40, top: 5, bottom: 20),
                 child: Text(
-                  'Hello',
-                  style: TextStyle(
+                  message,
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 16,
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 bottom: 4,
                 right: 10,
                 child: Text(
