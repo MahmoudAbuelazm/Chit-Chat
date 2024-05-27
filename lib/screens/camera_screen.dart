@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:camera/camera.dart';
 import 'package:chitchat/sections/camera_view.dart';
 import 'package:flutter/material.dart';
@@ -77,20 +75,22 @@ class _CameraScreenState extends State<CameraScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          flash = !flash;
-                        });
-                        controller!.setFlashMode(
-                            flash ? FlashMode.torch : FlashMode.off);
-                      },
-                      icon: Icon(
-                        flash ? Icons.flash_on : Icons.flash_off,
-                        color: Colors.white,
-                        size: 28,
-                      ),
-                    ),
+                    isRecording
+                        ? const SizedBox()
+                        : IconButton(
+                            onPressed: () {
+                              setState(() {
+                                flash = !flash;
+                              });
+                              controller!.setFlashMode(
+                                  flash ? FlashMode.torch : FlashMode.off);
+                            },
+                            icon: Icon(
+                              flash ? Icons.flash_on : Icons.flash_off,
+                              color: Colors.white,
+                              size: 28,
+                            ),
+                          ),
                     GestureDetector(
                       onLongPressUp: () async {
                         final path = join((await getTemporaryDirectory()).path,
@@ -131,22 +131,21 @@ class _CameraScreenState extends State<CameraScreen> {
                               size: 70,
                             ),
                     ),
-                    IconButton(
-                      onPressed: () async {
-                        setState(() {
-                          isFront = !isFront;
-                          angle += pi;
-                        });
-                        controller = CameraController(
-                            cameras[isFront ? 0 : 1], ResolutionPreset.high);
-                        cameraValue = controller!.initialize();
-                      },
-                      icon: Transform.rotate(
-                        angle: angle,
-                        child: const Icon(Icons.flip_camera_ios,
-                            color: Colors.white, size: 28),
-                      ),
-                    ),
+                    isRecording
+                        ? const SizedBox()
+                        : IconButton(
+                            onPressed: () async {
+                              setState(() {
+                                isFront = !isFront;
+                              });
+                              controller = CameraController(
+                                  cameras[isFront ? 0 : 1],
+                                  ResolutionPreset.high);
+                              cameraValue = controller!.initialize();
+                            },
+                            icon: const Icon(Icons.flip_camera_ios,
+                                color: Colors.white, size: 28),
+                          ),
                   ],
                 ),
                 const SizedBox(

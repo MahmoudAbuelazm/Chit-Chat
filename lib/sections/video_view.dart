@@ -13,16 +13,23 @@ class VideoView extends StatefulWidget {
 
 class _VideoViewState extends State<VideoView> {
   late VideoPlayerController controller;
+  bool _isPlaying = false;
 
   @override
   void initState() {
     controller = VideoPlayerController.file(File(widget.path))
       ..initialize().then((_) {
-        setState(() {
-          controller.play();
-        });
+        setState(() {});
       });
+
     super.initState();
+    controller.addListener(() {
+      if (controller.value.isPlaying != _isPlaying) {
+        setState(() {
+          _isPlaying = controller.value.isPlaying;
+        });
+      }
+    });
   }
 
   @override
@@ -85,7 +92,7 @@ class _VideoViewState extends State<VideoView> {
                   horizontal: 8,
                 ),
                 child: TextFormField(
-                  maxLength: 6,
+                  maxLines: 6,
                   minLines: 1,
                   style: const TextStyle(color: Colors.white, fontSize: 18),
                   decoration: InputDecoration(
@@ -124,7 +131,7 @@ class _VideoViewState extends State<VideoView> {
                     });
                   },
                   child: Icon(
-                    controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+                    _isPlaying ? Icons.pause : Icons.play_arrow,
                     size: 50,
                     color: Colors.white,
                   ),

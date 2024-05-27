@@ -56,7 +56,7 @@ class CameraView extends StatelessWidget {
                   horizontal: 8,
                 ),
                 child: TextFormField(
-                  maxLength: 6,
+                  maxLines: 6,
                   minLines: 1,
                   style: const TextStyle(color: Colors.white, fontSize: 18),
                   decoration: InputDecoration(
