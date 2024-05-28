@@ -16,8 +16,13 @@ class ButtonCard extends StatelessWidget {
         backgroundColor: const Color(0xff25D366),
         child: Icon(icon, size: 26, color: Colors.white),
       ),
-      title: Text(name,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+      title: Text(
+        name,
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+        ),
+      ),
     );
   }
 }
