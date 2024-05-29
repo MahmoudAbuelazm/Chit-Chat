@@ -50,7 +50,7 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
     socket!.onConnect((data) {
       print('Connected');
       socket!.on(
-        'message',
+        'message', 
         (msg) {
           print(msg);
           setMessage("destination", msg["message"]);

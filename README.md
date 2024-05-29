@@ -1,3 +1,2 @@
 # chitchat
-
-A new Flutter project.
+A Whats APP Clone
