@@ -29,7 +29,7 @@ class OtherStatus extends StatelessWidget {
       ),
       title: Text(
         name,
-        style: TextStyle(
+        style: const TextStyle(
           fontWeight: FontWeight.bold,
           color: Colors.black,
           fontSize: 16,

@@ -37,7 +37,7 @@ class _CountryPageState extends State<CountryPage> {
           backgroundColor: Colors.white,
           centerTitle: true,
           elevation: 0,
-          title: Text(
+          title: const Text(
             "Choose a country",
             style: TextStyle(
                 color: Colors.teal,
@@ -49,12 +49,12 @@ class _CountryPageState extends State<CountryPage> {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(Icons.arrow_back, color: Colors.teal),
+            icon: const Icon(Icons.arrow_back, color: Colors.teal),
           ),
           actions: [
             IconButton(
               onPressed: () {},
-              icon: Icon(Icons.search, color: Colors.teal),
+              icon: const Icon(Icons.search, color: Colors.teal),
             ),
           ],
         ),
@@ -74,32 +74,32 @@ class _CountryPageState extends State<CountryPage> {
         widget.setCountryData(country.name, country.code);
       },
       child: Card(
-        margin: EdgeInsets.all(.15),
+        margin: const EdgeInsets.all(.15),
         child: Container(
           height: 60,
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
           child: Row(
             children: [
               Text(
                 country.flag,
-                style: TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Text(
                 country.name,
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
               Expanded(
-                child: Container(
+                child: SizedBox(
                   width: 150,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
                         country.code,
-                        style: TextStyle(fontSize: 16),
+                        style: const TextStyle(fontSize: 16),
                       ),
                     ],
                   ),

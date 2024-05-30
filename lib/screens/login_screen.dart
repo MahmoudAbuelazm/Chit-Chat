@@ -14,6 +14,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   String countryname = "Egypt";
   String countrycode = "+20";
+  TextEditingController numberController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ],
         centerTitle: true,
       ),
-      body: Container(
+      body: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: Column(
@@ -58,6 +59,32 @@ class _LoginScreenState extends State<LoginScreen> {
             countrycard(),
             const SizedBox(height: 5),
             number(),
+            Expanded(child: Container()),
+            InkWell(
+              onTap: () {
+                if (numberController.text.length < 10) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Please enter your phone number correctly"),
+                    ),
+                  );
+                } else {
+                  _showMyDialog();
+                }
+              },
+              child: Container(
+                color: Colors.tealAccent[400],
+                height: 40,
+                width: 70,
+                child: const Center(
+                  child: Text(
+                    "Next",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 40),
           ],
         ),
       ),
@@ -90,10 +117,8 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Row(
           children: [
             Expanded(
-              child: Container(
-                child: Center(
-                  child: Text(countryname),
-                ),
+              child: Center(
+                child: Text(countryname),
               ),
             ),
             const Icon(Icons.arrow_drop_down, color: Colors.teal)
@@ -105,6 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget number() {
     return Container(
+        padding: const EdgeInsets.symmetric(vertical: 5),
         width: MediaQuery.of(context).size.width / 1.5,
         height: 38,
         child: Row(
@@ -121,14 +147,15 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               child: Row(
                 children: [
-                  Text("+", style: const TextStyle(fontSize: 15)),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
+                  const Text("+", style: TextStyle(fontSize: 15)),
+                  const SizedBox(width: 15),
                   Text(countrycode.substring(1),
                       style: const TextStyle(fontSize: 16)),
                 ],
               ),
             ),
-            SizedBox(width: 20),
+            const SizedBox(width: 20),
             Expanded(
               child: Container(
                 width: MediaQuery.of(context).size.width / 1.5 - 100,
@@ -141,6 +168,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 child: TextFormField(
+                  controller: numberController,
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   decoration: const InputDecoration(
@@ -162,5 +190,49 @@ class _LoginScreenState extends State<LoginScreen> {
       countrycode = countryModel.code;
     });
     Navigator.pop(context);
+  }
+
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const Text(
+                  "We will be verifying the phone number:",
+                  style: TextStyle(fontSize: 16),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  "$countrycode ${numberController.text}",
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                ),
+                const Text(
+                  "Is this OK, or would you like to edit the number?",
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Edit'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
