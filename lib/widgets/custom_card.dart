@@ -13,6 +13,7 @@ class CustomCard extends StatelessWidget {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return IndividualChatScreen(
             chatModel: chatModel,
+            sourechat: chatModel,
           );
         }));
       },
