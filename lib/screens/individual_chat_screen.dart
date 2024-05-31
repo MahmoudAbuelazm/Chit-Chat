@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:image_picker/image_picker.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
-
+import 'package:http/http.dart' as http;
 import '../model/message_model.dart';
 import '../widgets/own_message.dart';
 import 'camera_screen.dart';
@@ -62,7 +62,11 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
         'message',
         (msg) {
           print(msg);
-          setMessage("destination", msg["message"], path: msg["path"]);
+          setMessage(
+            "destination",
+            msg["message"],
+            path: msg["path"],
+          );
           scrollController.animateTo(
             scrollController.position.maxScrollExtent,
             duration: const Duration(milliseconds: 300),
@@ -92,6 +96,17 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
           time: DateTime.now().toString().substring(10, 16),
           path: path));
     });
+  }
+
+  void sendImage(String path) async {
+    var request =
+        http.MultipartRequest('POST', Uri.parse('http:/routes/upload'));
+    request.files.add(await http.MultipartFile.fromPath('image', path));
+    request.headers.addAll({
+      'Content-Type': 'multipart/form-data',
+    });
+    http.StreamedResponse response = await request.send();
+    print(response.statusCode);
   }
 
   @override
@@ -272,7 +287,9 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        const CameraScreen()));
+                                                        CameraScreen(
+                                                          onSend: sendImage,
+                                                        )));
                                           },
                                         ),
                                       ],
@@ -380,7 +397,9 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
                   iconCreate(Icons.camera_alt, 'Camera', Colors.pink, () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return const CameraScreen();
+                      return CameraScreen(
+                        onSend: sendImage,
+                      );
                     }));
                   }),
                   iconCreate(Icons.insert_photo, 'Gallery', Colors.purple,
@@ -391,6 +410,7 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
                         MaterialPageRoute(builder: (context) {
                       return CameraView(
                         path: file!.path,
+                        onSend: sendImage,
                       );
                     }));
                   }),

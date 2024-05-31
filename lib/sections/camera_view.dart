@@ -3,8 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 class CameraView extends StatelessWidget {
-  const CameraView({super.key, required this.path});
+  const CameraView({super.key, required this.path,required this.onSend});
   final String path;
+  final Function onSend;
 
   @override
   Widget build(BuildContext context) {
@@ -60,13 +61,18 @@ class CameraView extends StatelessWidget {
                   minLines: 1,
                   style: const TextStyle(color: Colors.white, fontSize: 18),
                   decoration: InputDecoration(
-                    suffixIcon: CircleAvatar(
-                      radius: 27,
-                      backgroundColor: Colors.tealAccent[700],
-                      child: const Icon(
-                        Icons.check,
-                        color: Colors.white,
-                        size: 27,
+                    suffixIcon: InkWell(
+                      onTap: () {
+                        onSend(path);
+                      },
+                      child: CircleAvatar(
+                        radius: 27,
+                        backgroundColor: Colors.tealAccent[700],
+                        child: const Icon(
+                          Icons.check,
+                          color: Colors.white,
+                          size: 27,
+                        ),
                       ),
                     ),
                     border: InputBorder.none,
@@ -75,8 +81,11 @@ class CameraView extends StatelessWidget {
                       color: Colors.white,
                       fontSize: 18,
                     ),
-                    prefixIcon: const Icon(Icons.add_photo_alternate,
-                        size: 27, color: Colors.white),
+                    prefixIcon: const Icon(
+                      Icons.add_photo_alternate,
+                      size: 27,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
