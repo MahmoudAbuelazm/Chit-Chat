@@ -3,9 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 class CameraView extends StatelessWidget {
-  const CameraView({super.key, required this.path,required this.onSend});
+  const CameraView({super.key, required this.path, required this.onSend});
   final String path;
   final Function onSend;
+  static TextEditingController textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -57,13 +58,17 @@ class CameraView extends StatelessWidget {
                   horizontal: 8,
                 ),
                 child: TextFormField(
+                  controller: textEditingController,
                   maxLines: 6,
                   minLines: 1,
                   style: const TextStyle(color: Colors.white, fontSize: 18),
                   decoration: InputDecoration(
                     suffixIcon: InkWell(
                       onTap: () {
-                        onSend(path);
+                        onSend(
+                          path,
+                          textEditingController.text.trim(),
+                        );
                       },
                       child: CircleAvatar(
                         radius: 27,

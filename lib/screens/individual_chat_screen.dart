@@ -98,7 +98,7 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
     });
   }
 
-  void sendImage(String path) async {
+  void sendImage(String path, {String? message}) async {
     var request =
         http.MultipartRequest('POST', Uri.parse('http:/routes/upload'));
     request.files.add(await http.MultipartFile.fromPath('image', path));
@@ -107,6 +107,13 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
     });
     http.StreamedResponse response = await request.send();
     print(response.statusCode);
+    setMessage("source", message ?? "", path: path);
+    socket!.emit('message', {
+      "message": message,
+      "sourceId": widget.sourechat.id,
+      "targetId": widget.chatModel.id,
+      "path": path
+    });
   }
 
   @override
