@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class OwnMessage extends StatelessWidget {
-  const OwnMessage({super.key, required this.message});
+  const OwnMessage({super.key, required this.message, required this.time});
   final String message;
+  final String time ;
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +39,14 @@ class OwnMessage extends StatelessWidget {
                   ),
                 ),
               ),
-              const Positioned(
+               Positioned(
                 bottom: 4,
                 right: 10,
                 child: Row(
                   children: [
                     Text(
-                      '10:00',
-                      style: TextStyle(
+                      time,
+                      style:const TextStyle(
                         color: Colors.black,
                         fontSize: 12,
                       ),

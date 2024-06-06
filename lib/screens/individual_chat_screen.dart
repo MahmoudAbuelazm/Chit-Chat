@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:chitchat/model/chat_model.dart';
 import 'package:chitchat/sections/camera_view.dart';
+import 'package:chitchat/widgets/own_file_card.dart';
 import 'package:chitchat/widgets/reply_card.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +35,7 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
   bool sendbutton = false;
   ImagePicker imagePicker = ImagePicker();
   XFile? file;
+  int popetime = 0;
   @override
   void initState() {
     connect();
@@ -99,6 +103,12 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
   }
 
   void sendImage(String path, {String? message}) async {
+    for (int i = 0; i < popetime; i++) {
+      Navigator.pop(context);
+    }
+    setState(() {
+      popetime = 0;
+    });
     var request =
         http.MultipartRequest('POST', Uri.parse('http:/routes/upload'));
     request.files.add(await http.MultipartFile.fromPath('image', path));
@@ -106,6 +116,8 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
       'Content-Type': 'multipart/form-data',
     });
     http.StreamedResponse response = await request.send();
+    var res = await http.Response.fromStream(response);
+    var data = jsonDecode(res.body);
     print(response.statusCode);
     setMessage("source", message ?? "", path: path);
     socket!.emit('message', {
@@ -232,9 +244,22 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
                       );
                     }
                     if (messages[index].type == "source") {
-                      return OwnMessage(
-                        message: messages[index].message,
-                      );
+                      if (messages[index].path != "" ||
+                          messages[index].path != null) {
+                             return OwnFileCard(
+                          path: messages[index].path!,
+                          message: messages[index].message,
+                          time: messages[index].time,
+
+                        );
+                       
+                      } else {
+                        return OwnMessage(
+                          message: messages[index].message,
+                          time: messages[index].time,
+                          
+                        );
+                      }
                     } else {
                       return ReplyCard(
                         message: messages[index].message,
@@ -290,6 +315,9 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
                                           icon: const Icon(Icons.camera_alt,
                                               color: Color(0xFF128C7E)),
                                           onPressed: () {
+                                            setState(() {
+                                              popetime = 2;
+                                            });
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -402,6 +430,9 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
                   iconCreate(Icons.insert_drive_file, 'Document', Colors.indigo,
                       () {}),
                   iconCreate(Icons.camera_alt, 'Camera', Colors.pink, () {
+                    setState(() {
+                      popetime = 3;
+                    });
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
                       return CameraScreen(
@@ -411,6 +442,9 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
                   }),
                   iconCreate(Icons.insert_photo, 'Gallery', Colors.purple,
                       () async {
+                    setState(() {
+                      popetime = 2;
+                    });
                     file = await imagePicker.pickImage(
                         source: ImageSource.gallery);
                     Navigator.push(context,
