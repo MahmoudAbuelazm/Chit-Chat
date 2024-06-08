@@ -84,6 +84,12 @@ class _CallsScreenState extends State<CallsScreen> {
         child: ListTile(
           leading: const CircleAvatar(
             radius: 25,
+            backgroundColor: Colors.blueGrey,
+            child: Icon(
+              Icons.person,
+              size: 30,
+              color: Colors.white,
+            ),
           ),
           title: Text(
             name,

@@ -62,11 +62,9 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
 
     socket!.emit('message', 'Hello');
     socket!.onConnect((data) {
-      print('Connected');
       socket!.on(
         'message',
         (msg) {
-          print(msg);
           setMessage(
             "destination",
             msg["message"],
@@ -119,7 +117,6 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
     http.StreamedResponse response = await request.send();
     var res = await http.Response.fromStream(response);
     var data = jsonDecode(res.body);
-    print(response.statusCode);
     setMessage("source", message ?? "", path: path);
     socket!.emit('message', {
       "message": message,
