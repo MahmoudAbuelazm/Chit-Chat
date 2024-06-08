@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../sections/camera_section.dart';
 import '../sections/chats_section.dart';
+import 'calls_screen.dart';
 import 'status_page.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -84,9 +85,7 @@ class _HomeScreenState extends State<HomeScreen>
             CameraSection(),
             ChatsSection(),
             StatusPage(),
-            Center(
-              child: Text('Calls'),
-            ),
+            CallsScreen(),
           ],
         ));
   }

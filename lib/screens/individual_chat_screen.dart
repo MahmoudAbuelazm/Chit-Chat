@@ -13,6 +13,7 @@ import 'package:socket_io_client/socket_io_client.dart' as io;
 import 'package:http/http.dart' as http;
 import '../model/message_model.dart';
 import '../widgets/own_message.dart';
+import '../widgets/reply_file_card.dart';
 import 'camera_screen.dart';
 
 class IndividualChatScreen extends StatefulWidget {
@@ -246,24 +247,31 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
                     if (messages[index].type == "source") {
                       if (messages[index].path != "" ||
                           messages[index].path != null) {
-                             return OwnFileCard(
+                        return OwnFileCard(
                           path: messages[index].path!,
                           message: messages[index].message,
                           time: messages[index].time,
-
                         );
-                       
                       } else {
                         return OwnMessage(
                           message: messages[index].message,
                           time: messages[index].time,
-                          
                         );
                       }
                     } else {
-                      return ReplyCard(
-                        message: messages[index].message,
-                      );
+                      if (messages[index].path != "" ||
+                          messages[index].path != null) {
+                        return ReplyFileCard(
+                          path: messages[index].path!,
+                          message: messages[index].message,
+                          time: messages[index].time,
+                        );
+                      } else {
+                        return ReplyCard(
+                          message: messages[index].message,
+                          time: messages[index].time,
+                        );
+                      }
                     }
                   },
                 ),

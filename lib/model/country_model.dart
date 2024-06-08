@@ -4,5 +4,9 @@ class CountryModel {
 
   String flag;
 
-  CountryModel({required this.name, required this.code, required this.flag});
+  CountryModel({
+    required this.name,
+    required this.code,
+    required this.flag,
+  });
 }

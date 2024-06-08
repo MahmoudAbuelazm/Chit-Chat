@@ -51,8 +51,8 @@ class OwnMessage extends StatelessWidget {
                         fontSize: 12,
                       ),
                     ),
-                    SizedBox(width: 3),
-                    Icon(
+                    const SizedBox(width: 3),
+                    const Icon(
                       Icons.done_all,
                       color: Colors.blue,
                       size: 20,
