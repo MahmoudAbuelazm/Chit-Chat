@@ -17,16 +17,16 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        darkTheme: ThemeData.dark().copyWith(
-          textTheme: GoogleFonts.poppinsTextTheme(),
-          scaffoldBackgroundColor: const Color(0xff1E1E1E),
-        ),
-        theme: ThemeData.light().copyWith(
-          textTheme: GoogleFonts.poppinsTextTheme(),
-          scaffoldBackgroundColor: Colors.white,
+        // darkTheme: ThemeData.dark().copyWith(
+        //   textTheme: GoogleFonts.poppinsTextTheme(),
+        //   scaffoldBackgroundColor: const Color(0xff1E1E1E),
+        // ),
+        // theme: ThemeData.light().copyWith(
+        //   textTheme: GoogleFonts.poppinsTextTheme(),
+        //   scaffoldBackgroundColor: Colors.white,
           
-        ),
-        themeMode: ThemeMode.light,
+        // ),
+        // themeMode: ThemeMode.light,
         debugShowCheckedModeBanner: false,
         home: const HomeScreen());
   }

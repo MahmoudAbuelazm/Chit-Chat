@@ -31,26 +31,12 @@ class OpenningScreen extends StatelessWidget {
               style: GoogleFonts.poppins(
                 fontSize: 23,
                 fontWeight: FontWeight.w500,
-                color: Theme.of(context).c,
               ),
               textAlign: TextAlign.center,
             ),
             SizedBox(
               height: height * 0.16,
             ),
-            CustomElevatedButton(
-text: 'Let\'s start',
-onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return LoginScreen();
-                  }),
-                );
-              },
-            )
-            
-            
           ],
         ),
       ),
